@@ -65,13 +65,23 @@ for row in coin_row[1:6]:
 
     dchange = price/change
     #print(dchange)
-    mon = "${:,.4f}". format(price - dchange)
-    print('Price Amount Change in last 24 hours:',mon)
+    
+    mon = float(price - dchange)
+
+    poneg = 'increase'
+    if mon > 0:
+        poneg = 'increase'
+    else:
+        poneg = 'decrease'
+
+    mon = "${:,.4f}". format(mon)
+
+    print('Price Amount Change in last 24 hours:',mon, poneg)
 
     print('')
     
     if str(td[2].text) == 'Bitcoin BTC ':
-        if price >  40000:
+        if price <  40000:
             textmessage = Client.messages.create(to=mycellphone, from_=TwilioNumber, body="BTC price is below $40,000!")
 
             #print(textmessage.status)
