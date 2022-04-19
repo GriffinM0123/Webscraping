@@ -83,7 +83,7 @@ for row in coin_row[1:6]:
     print('')
     
     if str(td[2].text) == 'Bitcoin BTC ':
-        if price >  40000:
+        if price <  40000:
             textmessage = Client.messages.create(to=mycellphone, from_=TwilioNumber, body="BTC price is below $40,000!")
 
             #print(textmessage.status)
