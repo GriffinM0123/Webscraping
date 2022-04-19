@@ -31,13 +31,13 @@ soup = BeautifulSoup(webpage, 'html.parser')
 
 title = soup.title
 
-print(title)
+#print(title)
 
 coin_row = soup.findAll('tr')
 
 accountSID = 'AC31a443f768547cfb55cc1feb94765730'
 
-authToken = '599da50f32971021455b6746ab715870'
+authToken = 'efcc63285753824d85db1e3a9b161acf'
 
 Client = Client(accountSID, authToken)
 
@@ -72,7 +72,7 @@ for row in coin_row[1:6]:
             #print(textmessage.status)
 
 
-
+#Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope process .\.venv\Scripts\activate
 
 
 
