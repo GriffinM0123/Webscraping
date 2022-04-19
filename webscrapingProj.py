@@ -1,7 +1,7 @@
 from unicodedata import name
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
-
+from twilio.rest import Client
 
 
 
@@ -19,7 +19,7 @@ Submit your GitHub URL which should contain all the files worked in class as wel
 
 
 url = 'https://cryptoslate.com/coins/'
-#url = 'https://coinmarketcap.com/'
+
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
@@ -35,17 +35,49 @@ print(title)
 
 coin_row = soup.findAll('tr')
 
+accountSID = 'AC31a443f768547cfb55cc1feb94765730'
+
+authToken = '599da50f32971021455b6746ab715870'
+
+Client = Client(accountSID, authToken)
+
+TwilioNumber = "+17622486473"
+
+mycellphone = "+19703906757"
+
 for row in coin_row[1:6]:
     td = row.findAll('td')
 
-
     name = td[2].text
-    print(name)
-    
+    print('Name and Symbol:',name)
+
     price = td[4].text
-    print(price)
+    print('Current Price:',price)
+    price = float(td[4].text.replace(',','').replace('$',''))
     
     change = td[5].text
-    print(change)
+    print('Percent Change in last 24 hours:',change)
+
+    print('')
     
+    if str(td[2].text) == 'Bitcoin BTC ':
+        if price < 40000:
+            textmessage = Client.messages.create(to=mycellphone, from_=TwilioNumber, body="BTC price is below $40,000!")
+
+            #print(textmessage.status)
+
+    if str(td[2].text) == 'Ethereum ETH ':
+        if price < 3000:
+            textmessage = Client.messages.create(to=mycellphone, from_=TwilioNumber, body="ETH price is below $3,000!")
+            #print(textmessage.status)
+
+
+
+
+
+
+
+
+
+
 
