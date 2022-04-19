@@ -31,7 +31,9 @@ soup = BeautifulSoup(webpage, 'html.parser')
 
 title = soup.title
 
-#print(title)
+print(title.text)
+print('Ranked by Market Capitalization')
+print()
 
 coin_row = soup.findAll('tr')
 
@@ -56,12 +58,20 @@ for row in coin_row[1:6]:
     price = float(td[4].text.replace(',','').replace('$',''))
     
     change = td[5].text
-    print('Percent Change in last 24 hours:',change)
+    print('Percent Change in Price over the last 24 hours:',change)
+    change = float(td[5].text.replace('','').replace('+','').replace('%',''))
+    change = 1 + (change/100)
+    #print(change)
+
+    dchange = price/change
+    #print(dchange)
+    mon = "${:,.4f}". format(price - dchange)
+    print('Price Amount Change in last 24 hours:',mon)
 
     print('')
     
     if str(td[2].text) == 'Bitcoin BTC ':
-        if price <  40000:
+        if price >  40000:
             textmessage = Client.messages.create(to=mycellphone, from_=TwilioNumber, body="BTC price is below $40,000!")
 
             #print(textmessage.status)
